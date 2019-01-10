@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">nous Review</string>
+    <string name="facebook_app_id">301790560433132</string>
+    <string name="fb_login_protocol_scheme">fb301790560433132</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="whatever">whatever</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="upload">Upload</string>
+
+</resources>
