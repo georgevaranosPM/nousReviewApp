@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+//Klasi Work Adapter i opoia xrisimopoieitai gia na metaferontai ta dedomena se morfi list view sti WorkslistActivity wste na mporei
+//na ta vlepei o xristis
 public class WorkAdapter extends ArrayAdapter<Work> {
 
     private final LayoutInflater inflater;

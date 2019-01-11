@@ -29,10 +29,11 @@ public class WorksListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_works_list);
 
-        //READ DATABASE
+        //Diavasma vasis dedomenwn
         appDB = getBaseContext().openOrCreateDatabase(SQL_FILE_NAME, Context.MODE_PRIVATE, null);
         readDataFromDB(0);
 
+        //Spinner gia tin epilogi taxinomisi twn modelwn
         final Spinner sortby_spinner = findViewById(R.id.sortby);
         String[] sorting = new String[]{"Date", "Alphabetically", "Production"};
         ArrayAdapter<String> sorting_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sorting);
@@ -41,7 +42,7 @@ public class WorksListActivity extends AppCompatActivity {
         sortby_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("SORTING", "With: " + position);
+                //Taxinomisi vasei tis epilogis me taxinomisi apo ti vasi kai enimerwsh tou listview
                 allWorks_Review.clear();
                 readDataFromDB(position);
                 workListView.invalidateViews();
@@ -52,11 +53,10 @@ public class WorksListActivity extends AppCompatActivity {
 
             }
         });
-
+        //Perasma twn dedomenwn sto listview
         parseData();
 
-
-
+        //Click Listener panw sta antikeimena tou listview wste na anoigei to antikeimeno sto Model View Activity gia na vlepeis to modelo
         workListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -66,6 +66,8 @@ public class WorksListActivity extends AppCompatActivity {
             }
         });
 
+        //Long Click Listener panw sta antikeimena tou listview me to opoio o xristis mporei na diavasei tin pliri perigrafi
+        //tou antikeimenou
         workListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -75,10 +77,10 @@ public class WorksListActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
+    //Methodos gia diavasma twn antikeimenwn apo ti vasi dedomenwn me tin parametro "how"
+    //h opoia mas leei me poia taxinomisi na ta travixei
     private void readDataFromDB(int how){
         Cursor cursor = appDB.rawQuery("select * from works",
                 null);
@@ -92,6 +94,7 @@ public class WorksListActivity extends AppCompatActivity {
                     null);
         }
 
+        //Dhmiourgia proswrinou antikeimenou Work gia na perastei stin arraylist olwn twn antikeimenwn
         while(cursor.moveToNext()){
             Work temp = new Work("", "", "", 0, "");
             temp.setName(cursor.getString(0));
@@ -105,12 +108,13 @@ public class WorksListActivity extends AppCompatActivity {
         }
         cursor.close();
     }
-
+    //Override tis methodou tis opoias otan patas to koubi "Back" na phgainei sti Main Activity kai oxi px stin Upload Activity
     @Override
     public void onBackPressed() {
         startActivity(new Intent(WorksListActivity.this, MainActivity.class));
     }
 
+    //Perasma twn dedomenwn sto listview me ti xrisi tou Work Adapter
     private void parseData() {
         WorkAdapter workAdapter = new
                 WorkAdapter(WorksListActivity.this,
@@ -121,6 +125,7 @@ public class WorksListActivity extends AppCompatActivity {
         workListView.setAdapter(workAdapter);
     }
 
+    //Kleisimo tis vasis dedomenwn
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -1,5 +1,7 @@
 package com.nousanimation.nousreview;
 
+//H klasi "Work" i opoia afora to kathe modelo 3exwrista kai periexei pedio onomatos, paragwgis, imerominias anevasmatos, to path gia to arxeio
+//kai tin perigrafi
 public class Work {
     public String name;
     public String production;
@@ -10,6 +12,7 @@ public class Work {
     public Work(String u, String s, String d, int i, String s2) {
     }
 
+    //Getters and Setters
     public void setName(String name) {this.name = name; }
 
     public void setProduction(String production) {

@@ -1,5 +1,6 @@
 package com.nousanimation.nousreview;
 
+//H klasi "Limit" i opoia periexei 5 metavlites gia tous periorismous twn arxeiwn
 public class Limit {
     public String fileType;
     public int minFaceCount;
@@ -10,6 +11,7 @@ public class Limit {
     public Limit(String fileType, int minFace, int maxFace, int minVert, int maxVert) {
     }
 
+    //Setters (Getters de xreiazontai)
     public void setFileType(String fileType) {
         this.fileType = fileType;
     }

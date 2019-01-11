@@ -41,8 +41,11 @@ import static fr.arnaudguyon.smartgl.touch.TouchHelperEvent.TouchEventType.SINGL
 public class ModelViewActivity extends AppCompatActivity implements SmartGLViewController {
 
     private static final int REQUEST_CODE_WRITE_EXT_STORAGE = 1;
+    //Metavliti poy elegxei to poso evaisthito tha einai to rotate tou modelou
     private static final float ROT_FACTOR = 10;
+    //Metavliti poy elegxei to poso evaisthito tha einai to scale tou modelou
     private static final float SCALE_FACTOR = 200.0f;
+    //Arxiki ypothesi oti i dhmiourgia newn arxeiwn apagorevetai mexri na lifthei adeia
     private static boolean WRITE_EXT_STORAGE_GRANTED = false;
 
     //Metavlites gia to 3d model
@@ -60,12 +63,15 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model_view);
 
+        //Parakampsi twn politikwn gia tin apostoli tou screenshot mesw email
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
+        //Lipsi tou path apo to WorksListActivity gia anoigma tou arxeiou
         Intent intentFromList = getIntent();
         the_path = intentFromList.getExtras().getInt("path_for_file");
 
+        //Grafika stoixeia
         final ToggleButton sketch = findViewById(R.id.sketch_button);
         final ToggleButton view = findViewById(R.id.view_button);
         final ImageButton tick = findViewById(R.id.tick_button);
@@ -78,6 +84,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
         mSmartGLView.setDefaultRenderer(this);
         mSmartGLView.setController(this);
 
+        //------------------Exousiodotisi adeias gia dhmiourgia kai apothikefsi arxeiou, sti sigkekrimeni periptwsi tou screenshot--------------
         int hasWriteStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         Log.d("", "HAS Write Storage Permissions " + hasWriteStoragePermission);
 
@@ -88,7 +95,9 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
             Log.d("", "Requesting permission");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_EXT_STORAGE);
         }
+        //--------------------------------------------------------------------------------------------------------------------------------------
 
+        //Sketch mode
         sketch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tick.setVisibility(View.VISIBLE);
@@ -101,6 +110,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
             }
         });
 
+        //View mode
         view.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tick.setVisibility(View.INVISIBLE);
@@ -114,6 +124,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
             }
         });
 
+        //Akirwsi tou sketch mode kai diagrafi tou skitsou
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tick.setVisibility(View.INVISIBLE);
@@ -127,10 +138,12 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
             }
         });
 
+        //Lipsi stigmiotypoy mazi me to skitso panw sto modelo kai apostoli aftoy mesw email (i alles energeies)
         tick.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (WRITE_EXT_STORAGE_GRANTED) {
-
+                    //Methodos pou diathetei i vivliothiki gia ti lipsi screenshot kai syndyasmos tis
+                    //me tin getRootBitmap() i opoia pairnei to skitso kai dhmiourgei ena eniaio screenshot gia apostoli
                     mSmartGLView.getSmartGLRenderer().takeScreenshot(new OpenGLRenderer.OnTakeScreenshot() {
                         @Override
                         public void screenshotTaken(Bitmap bitmap) {
@@ -146,15 +159,13 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
             }
         });
 
+        //Bara gia ton elegxo tou scaling
         scaleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean b) {
                 int diff = progressValue - previousProcess;
-                Log.d("HEY", "onProgressChanged: " + diff);
-                Log.d("SCALE", "onProgressChanged: " + currentObj.getScaleX());
                 currentObj.setScale(currentObj.getScaleX()+(diff/SCALE_FACTOR), currentObj.getScaleY()+(diff/SCALE_FACTOR), currentObj.getScaleZ()+(diff/SCALE_FACTOR));
                 previousProcess = progressValue;
-                //mSmartGLView.requestRender();
             }
 
             @Override
@@ -169,6 +180,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
         });
     }
 
+    //Methodos onPrepareView gia to render tou modelou obj
     @Override
     public void onPrepareView(SmartGLView smartGLView) {
         SmartGLRenderer renderer = mSmartGLView.getSmartGLRenderer();
@@ -176,8 +188,10 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
         renderer.addRenderPass(renderPassObject3D);  // add it only once for all 3D Objects
         Context context = smartGLView.getContext();
 
+        //Dhmiourgia texture
         objTexture = new Texture(context, R.drawable.texture);
 
+        //Dhmiourgia modelou kai enswmatwsi texture
         WavefrontModel model = new WavefrontModel.Builder(context, the_path)
                 .addTexture("", objTexture) // "Material001" is defined in the spaceship_obj file
                 .create();
@@ -205,6 +219,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
 
     }
 
+    //Override tis methodoy onToucEvent wste otan anixnevei kinisi daxtyloy na kanei rotate to modelo
     @Override
     public void onTouchEvent(SmartGLView smartGLView, TouchHelperEvent touchHelperEvent) {
 
@@ -215,7 +230,6 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
             currentObj.addRotY((x-mPreviousX)/ROT_FACTOR);
             currentObj.addRotX((y-mPreviousY)/ROT_FACTOR);
             smartGLView.requestRender();
-            Log.d("KOUNIETAI", "onTouchEvent: " + x + "|" + y);
         }
 
         mPreviousX = x;
@@ -239,6 +253,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
         }
     }
 
+    //Apothikefsi arxeiou bitmap gia to screenshot
     public String saveBitmap(Bitmap bitmap) {
         String filePath = Environment.getExternalStorageDirectory().toString()
                 + File.separator + "Pictures/screenshot.png";
@@ -258,6 +273,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
         return filePath;
     }
 
+    //Methodos i opoia pairnei to skitso se morfi bitmap
     public Bitmap getRootBitmap() {
         View v1 = getWindow().getCurrentFocus();
         v1.setDrawingCacheEnabled(true);
@@ -268,6 +284,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
         return resizedBitmap;
     }
 
+    //Methodos gia to syndyasmo twn dyo bitmap
     public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
         Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
         Canvas canvas = new Canvas(bmOverlay);
@@ -276,12 +293,13 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
         return bmOverlay;
     }
 
+    //Methodos gia ton elegxo twn adeiwn gia tin eggrafi arxeiwn
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_WRITE_EXT_STORAGE: {
-                // If request is cancelled, the result arrays are empty.
+                //Ean i aitisi aporifthei, tote oi pinakes einai adeioi (=0)
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d("Permissions", "Granted!");

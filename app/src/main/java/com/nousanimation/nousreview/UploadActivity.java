@@ -23,7 +23,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class UploadActivity extends AppCompatActivity {
@@ -45,31 +44,39 @@ public class UploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload);
         context = this;
 
-        //READ DATABASE
+        //Diavasma tis vasis dedomenwn wste na mporoume parakatw na prosthesoume neo antikeimeno se afti
         appDB = getBaseContext().openOrCreateDatabase(SQL_FILE_NAME, Context.MODE_PRIVATE, null);
 
+        //Katevasma twn periorismwn apo to API myJson me async task
         DownloadData downloadData = new DownloadData();
         downloadData.execute("https://api.myjson.com/bins/6hxkg");
 
+        //Dropdown menu gia tin epilogi paragwgis
         dropdown_production = findViewById(R.id.production_selection);
         String[] production_items = new String[]{"Advertisment", "New Movie", "Video Game"};
         ArrayAdapter<String> production_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, production_items);
         dropdown_production.setAdapter(production_adapter);
 
+        //Pedio gia tin eisagwgi onomatos modelou
         creation_name = findViewById(R.id.name_text);
         creation_name.setHint("sthgreat.obj");
 
+        //Pedio imerominias to opoio vazei aftomata tin trexousa imerominia alla mporei an allaxei
         TextView date_textview = findViewById(R.id.date_text);
         date = new Date();
         date_textview.setText(dateFormat.format(date));
 
+        //Pedio gia tin eisagwgi perigrafis tou modelou
         description_text = findViewById(R.id.description_container);
 
+        //Dropdown menu gia tin epilogi tou modelou
         dropdown_model = findViewById(R.id.model_selection);
         String[] model_items = new String[]{"Android", "Horse", "Space Cruiser"};
         ArrayAdapter<String> model_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, model_items);
         dropdown_model.setAdapter(model_adapter);
 
+        //Click Listener tou koumpiou "Browse" to opoio pernei ola ta parapanw stoixeia kai dhmiourgei ena neo antikeimeno
+        //sti vasi dedomenwn, efoson plirei tis proipotheseis-periorismous
         Button browseButton = findViewById(R.id.browse_button);
         browseButton.setOnClickListener(new View.OnClickListener() {
 
@@ -85,7 +92,7 @@ public class UploadActivity extends AppCompatActivity {
                     the_path = R.raw.space_cruiser_obj;
                 }
 
-                //READING OBJ MODEL
+                //Diavasma tou modelou obj gia elegxo twn periorismwn
                 InputStream is = getApplicationContext().getResources().openRawResource(the_path);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
@@ -111,24 +118,27 @@ public class UploadActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                //Metrisi twn "faces" kai twn "vertices" twn montelwn
                 int countFace = sBuilder.toString().length() - sBuilder.toString().replace("f", "").length();
                 int countVert = sBuilder.toString().length() - sBuilder.toString().replace("v", "").length();
 
+                //Elegxos twn periorismwn
                 if(countFace >= limits.minFaceCount && countFace <= limits.maxFaceCount) {
                     if(countVert >= limits.minVertCount && countVert <= limits.maxVertCount) {
-                        //NEW ITEM IN DATABASE
+                        //Eisagwgi sti vasi dedomenwn
                         appDB.execSQL("insert into works(name, production, date, path, description) " +
                                 "values('"+creation_name.getText().toString()+"','"+dropdown_production.getSelectedItem().toString()+"', '"+dateFormat.format(date)+"', '"+the_path+"', '"+description_text.getText().toString()+"')");
 
                         Intent upload_Intent = new Intent(UploadActivity.this, MainActivity.class);
-                        //upload_Intent.putExtra("path_for_file", the_path);
                         startActivity(upload_Intent);
                     }
+                    //Eidopoihsh se periptwsh mi ikanopoihshs twn periorismwn
                     else {
                         Toast errorOnVert_toast = Toast.makeText(getApplicationContext(), "Not the appropriate number of vertices!", Toast.LENGTH_LONG);
                         errorOnVert_toast.show();
                     }
                 }
+                //Eidopoihsh se periptwsh mi ikanopoihshs twn periorismwn
                 else {
                     Toast errorOnFace_toast = Toast.makeText(getApplicationContext(), "Not the appropriate number of faces!", Toast.LENGTH_LONG);
                     errorOnFace_toast.show();
@@ -138,6 +148,7 @@ public class UploadActivity extends AppCompatActivity {
 
     }
 
+    //------------------Klasi async task gia katevasma twn periorismwn xwris kathisteriseis------------------
     private class DownloadData extends AsyncTask<String, Void, String> {
         private static final String TAG = "DownloadLimitsTask";
 
@@ -189,7 +200,9 @@ public class UploadActivity extends AppCompatActivity {
             return sb.toString();
         }
     }
+    //------------------------------------------------------------------------------------------------------------
 
+    //Kleisimo tis vasis dedomenwn
     @Override
     protected void onDestroy() {
         super.onDestroy();

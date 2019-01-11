@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button signout = findViewById(R.id.signout_button);
 
+        //Button listener gia ti metavasi sto activity opou tha elegxeis ta modela
         review_Option.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent review_intent = new Intent(MainActivity.this, WorksListActivity.class);
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Button listener gia ti metavasi sto activity opou tha anevazeis modela
         upload_Option.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent upload_Intent = new Intent(MainActivity.this, UploadActivity.class);
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Button listener gia aposindesi
         signout.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 LoginManager.getInstance().logOut();
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Override tis methodou tis opoias otan patas to koubi "Back" na se anagkazeis na vgeis mono me aposindesi
     @Override
     public void onBackPressed() {
         Toast cancel_toast = Toast.makeText(getApplicationContext(), "You must sign out!", Toast.LENGTH_SHORT);

@@ -19,6 +19,7 @@ import java.io.File;
 
 public class LogInActivity extends AppCompatActivity {
 
+    //Key strings gia ti dimiourgia tis vasis dedomenwn an den yparxei
     private static final String SQL_FILE_NAME = "nousreview-db";
     private static final String TABLE_NAME = "works";
     private static final String NAME = "name";
@@ -36,6 +37,7 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        //--------------------Leitourgies gia tin eisodo mesw fb--------------------
         final Button login_button = findViewById(R.id.signin_Button);
         final Button fb_button = findViewById(R.id.login_button);
         
@@ -74,7 +76,9 @@ public class LogInActivity extends AppCompatActivity {
                         error_toast.show();
                     }
                 });
+        //--------------------------------------------------------------------------------
 
+        //Dimiourgia h anoigma vasis dedomenwn SQL
         if(!fileExists()) {
             appDB = getBaseContext().openOrCreateDatabase(SQL_FILE_NAME, Context.MODE_PRIVATE, null);
 
@@ -88,11 +92,11 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
+    //Methodos pou elegxei an yparxei idi arxeio tis vasis dedomenwn
     private boolean fileExists() {
         File file = getBaseContext().getDatabasePath(SQL_FILE_NAME);
         return file.exists();
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -100,6 +104,8 @@ public class LogInActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //Override tis methodou tis opoias otan patas to koubi "Back" na pragmatopoiei exodo apo tin efarmogi kai na
+    //min gyrnaei sto proigoumeno activity
     @Override
     public void onBackPressed() {
         Intent close_Intent = new Intent(Intent.ACTION_MAIN);

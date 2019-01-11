@@ -10,11 +10,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class SimpleDrawingView extends View {
-    // setup initial color
+    //Kathorismos xrwmatos
     private final int paintColor = Color.RED;
-    // defines paint and canvas
     private Paint drawPaint;
-    // stores next circle
     private Path path = new Path();
 
     public SimpleDrawingView(Context context, AttributeSet attrs) {
@@ -25,7 +23,7 @@ public class SimpleDrawingView extends View {
     }
 
     private void setupPaint() {
-        // Setup paint with color and stroke styles
+        //Kathorismos vourtsas
         drawPaint = new Paint();
         drawPaint.setColor(paintColor);
         drawPaint.setAntiAlias(true);
@@ -40,11 +38,11 @@ public class SimpleDrawingView extends View {
         canvas.drawPath(path, drawPaint);
     }
 
+    //Override tis methodou onTouchEvent wste otan anixnevetai kinisi daxtyloy na zwgrafizei
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float pointX = event.getX();
         float pointY = event.getY();
-        // Checks for the event that occurs
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 path.moveTo(pointX, pointY);
@@ -55,11 +53,11 @@ public class SimpleDrawingView extends View {
             default:
                 return false;
         }
-        // Force a view to draw again
         postInvalidate();
         return true;
     }
 
+    //Methodos gia na diagrafei to sxedio
     public void deletePath() {
         path.reset();
         postInvalidate();

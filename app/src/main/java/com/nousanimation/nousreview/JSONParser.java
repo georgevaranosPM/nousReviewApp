@@ -5,10 +5,12 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+//JSON Parser gia tin anagnosi tou JSON arxeiou apo to myJson API pou periexei tous periorismous gia ta 3D modela
 public class JSONParser {
 
     private static final String TAG = "JSONParser";
 
+    //String keys gia tin anagnosi twn 3exwristwn pediwn
     public static final String FILE_TYPE_KEY = "format";
     public static final String MAX_FACE_KEY = "maxFaceCount";
     public static final String MIN_FACE_KEY = "minFaceCount";
@@ -24,6 +26,7 @@ public class JSONParser {
         return limits;
     }
 
+    //Gemisma twn pediwn tis arraylist limits
     public Limit parseJson(String jsonText){
         try{
             JSONObject jObject = new JSONObject(jsonText);
