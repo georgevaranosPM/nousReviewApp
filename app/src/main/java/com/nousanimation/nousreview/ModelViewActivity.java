@@ -44,7 +44,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
     //Metavliti poy elegxei to poso evaisthito tha einai to rotate tou modelou
     private static final float ROT_FACTOR = 10;
     //Metavliti poy elegxei to poso evaisthito tha einai to scale tou modelou
-    private static final float SCALE_FACTOR = 200.0f;
+    private static final float SCALE_FACTOR = 400.0f;
     //Arxiki ypothesi oti i dhmiourgia newn arxeiwn apagorevetai mexri na lifthei adeia
     private static boolean WRITE_EXT_STORAGE_GRANTED = false;
 
@@ -79,6 +79,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
         final SimpleDrawingView drawing = findViewById(R.id.drawingHere);
         final SeekBar scaleSeekBar = findViewById(R.id.scaleBar);
         drawing.setVisibility(View.INVISIBLE);
+        view.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.checked_color));
 
         mSmartGLView = findViewById(R.id.smartGLView);
         mSmartGLView.setDefaultRenderer(this);
@@ -96,7 +97,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_EXT_STORAGE);
         }
         //--------------------------------------------------------------------------------------------------------------------------------------
-
+        
         //Sketch mode
         sketch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -107,8 +108,11 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
                 view.setChecked(false);
                 sketch.setChecked(true);
                 drawing.setVisibility(View.VISIBLE);
+                sketch.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.checked_color));
+                view.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.button_color));
             }
         });
+
 
         //View mode
         view.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +125,8 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
                 sketch.setChecked(false);
                 drawing.deletePath();
                 drawing.setVisibility(View.INVISIBLE);
+                view.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.checked_color));
+                sketch.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.button_color));
             }
         });
 
@@ -135,6 +141,8 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
                 sketch.setChecked(false);
                 drawing.deletePath();
                 drawing.setVisibility(View.INVISIBLE);
+                view.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.checked_color));
+                sketch.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.button_color));
             }
         });
 
@@ -164,7 +172,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean b) {
                 int diff = progressValue - previousProcess;
-                currentObj.setScale(currentObj.getScaleX()+(diff/SCALE_FACTOR), currentObj.getScaleY()+(diff/SCALE_FACTOR), currentObj.getScaleZ()+(diff/SCALE_FACTOR));
+                currentObj.setScale(currentObj.getScaleX() + (diff / SCALE_FACTOR), currentObj.getScaleY() + (diff / SCALE_FACTOR), currentObj.getScaleZ() + (diff / SCALE_FACTOR));
                 previousProcess = progressValue;
             }
 
@@ -219,7 +227,7 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
 
     }
 
-    //Override tis methodoy onToucEvent wste otan anixnevei kinisi daxtyloy na kanei rotate to modelo
+    //Override tis methodoy onToucηEvent wste otan anixnevei kinisi daxtyloy na kanei rotate to modelo
     @Override
     public void onTouchEvent(SmartGLView smartGLView, TouchHelperEvent touchHelperEvent) {
 

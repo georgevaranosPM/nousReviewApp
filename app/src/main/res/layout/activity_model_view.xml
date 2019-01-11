@@ -83,7 +83,8 @@
         android:id="@+id/scaleBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="192dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:maxWidth="100dp"
         android:minWidth="50dp"
         android:orientation="vertical"
@@ -91,8 +92,9 @@
         android:rotation="270"
         android:scaleX="1.7"
         android:scaleY="1.7"
-        app:layout_constraintStart_toStartOf="@+id/drawingHere"
-        app:layout_constraintTop_toTopOf="@+id/drawingHere" />
+        app:layout_constraintBottom_toTopOf="@+id/cancel_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sketch_button" />
 
     <fragment
         android:id="@+id/home_fragment"
