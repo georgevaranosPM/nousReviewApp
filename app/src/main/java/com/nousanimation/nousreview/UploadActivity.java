@@ -131,6 +131,9 @@ public class UploadActivity extends AppCompatActivity {
 
                         Intent upload_Intent = new Intent(UploadActivity.this, MainActivity.class);
                         startActivity(upload_Intent);
+                        //Toast gia na gnwrizei o xristis oti prostethike to modelo
+                        Toast uploaded_toast = Toast.makeText(getApplicationContext(), creation_name.getText() + " added successfully to your models' list", Toast.LENGTH_LONG);
+                        uploaded_toast.show();
                     }
                     //Eidopoihsh se periptwsh mi ikanopoihshs twn periorismwn
                     else {
