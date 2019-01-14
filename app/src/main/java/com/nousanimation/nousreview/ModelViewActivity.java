@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.io.File;
@@ -97,7 +98,11 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_EXT_STORAGE);
         }
         //--------------------------------------------------------------------------------------------------------------------------------------
-        
+
+        //Toast gia na gnwrizei o xristis oti einai se view mode, afou ginei to arxiko render
+        final Toast view_toast = Toast.makeText(getApplicationContext(), "View mode", Toast.LENGTH_SHORT);
+        view_toast.show();
+
         //Sketch mode
         sketch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -110,6 +115,10 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
                 drawing.setVisibility(View.VISIBLE);
                 sketch.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.checked_color));
                 view.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.button_color));
+
+                //Toast gia na gnwrizei o xristis oti einai se sketch mode
+                Toast sketch_toast = Toast.makeText(getApplicationContext(), "Sketch mode", Toast.LENGTH_SHORT);
+                sketch_toast.show();
             }
         });
 
@@ -127,6 +136,9 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
                 drawing.setVisibility(View.INVISIBLE);
                 view.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.checked_color));
                 sketch.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.button_color));
+
+                //Toast gia na gnwrizei o xristis oti einai se view mode
+                view_toast.show();
             }
         });
 
@@ -143,6 +155,9 @@ public class ModelViewActivity extends AppCompatActivity implements SmartGLViewC
                 drawing.setVisibility(View.INVISIBLE);
                 view.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.checked_color));
                 sketch.setBackgroundTintList(getBaseContext().getResources().getColorStateList(R.color.button_color));
+
+                //Toast gia na gnwrizei o xristis oti metavainei se view mode afou ekane cancel apo to sketch mode
+                view_toast.show();
             }
         });
 
