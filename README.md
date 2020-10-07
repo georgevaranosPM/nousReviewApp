@@ -11,10 +11,10 @@ This application was awarded among the 10 best Android applications of the 2017-
 Screenshots of the app:
 
 MainActivity:
-![Main Activity Screenshot](https://i.ibb.co/9tNZNFR/Screenshot-2020-10-07-10-04-41-025-com-nousanimation-nousreview.jpg)
+![Main Activity Screenshot](https://i.ibb.co/DGrJtPb/Screenshot-2020-10-07-10-04-41-025-com-nousanimation-nousreview.jpg)
 
 ModelViewActivity (View Mode):
-![Model View Activity View Mode Screenshot](https://i.ibb.co/BrJY9zy/Screenshot-2020-10-07-10-05-01-969-com-nousanimation-nousreview.jpg)
+![Model View Activity View Mode Screenshot](https://i.ibb.co/tMgpZSx/Screenshot-2020-10-07-10-05-01-969-com-nousanimation-nousreview.jpg)
 
 ModelViewActivity (Edit Mode):
-![Model View Activity View Mode Screenshot](https://i.ibb.co/g9hXK2Q/Screenshot-2020-10-07-10-06-28-992-com-nousanimation-nousreview.jpg)
+![Model View Activity View Mode Screenshot](https://i.ibb.co/MS7SsyC/Screenshot-2020-10-07-10-06-28-992-com-nousanimation-nousreview.jpg)
